@@ -1,6 +1,6 @@
-# numerical_methods
+# Numerical methods
 
-## Content
+## Content list:
 * [Definitions and Basics](#basics)
 * [Homework 1 - Exact Solution of Linear Systems](#hw1)
   * [Gaussian elimination](#gauss)
