@@ -120,6 +120,48 @@ def Cholesky(A):
 
 ![image16](https://github.com/VictoriaAutMors/numerical_methods/blob/master/hw1/plots/Cholesky.png)
 
+# <a name="hw2"></a> Homework 2 - Iterative methods
+An iterative method is a mathematical procedure that uses an initial guess to generate a sequence of improving approximate solutions for a class of problems, in which the n-th approximation is derived from the previous ones.
+## <a name="seidel"></a> Seidel method
+
+The Seidel method is an iterative technique for solving a square system of n linear equations with unknown x: Ax = b
+We represent matrix A as the sum of a lower triangular, diagonal, and upper triangular matrix A = L + D + U.
+And let the matrix B = D + L, then when substituting 
+T = 1 in the expression ![image17](https://github.com/VictoriaAutMors/numerical_methods/blob/master/Images/its1.jpg) we get the Seidel method.
+
+### code realisation in Python3: 
+```
+def seidel (A , f , x ):
+    xnew = np.zeros(n)
+    for i in range(n):
+        s = float(0)
+        for j in range(i):
+            s = float(s + A [ i ][ j ] * xnew [ j ])
+        for j in range(i + 1, n):
+            s = float(s + A[ i ][ j ] * x[ j ])
+        xnew[ i ] = float(( f[ i ] - s) / A [ i ][ i ])
+    return xnew
+```
+
+## <a name="jacobi"></a> Jacobi method
+The Jacobi method is an iterative technique for solving a square system of n linear equations with unknown x: Ax = b
+We represent matrix A as the sum of a lower triangular, diagonal, and upper triangular matrix A = L + D + U.
+And let the matrix B = D in the expression ![image18](https://github.com/VictoriaAutMors/numerical_methods/blob/master/Images/its1.jpg) then we get the Jacobi method.
+
+### code realisation in Python3: 
+```
+def jacobi (A , f , x ):
+    xnew = n * [0]
+    for i in range(n):
+        s = 0
+        for j in range(0, i):
+            s = s + A [ i ][ j ] * x [ j ]
+        for j in range(i + 1, n):
+            s = s + A [ i ][ j ] * x [ j ]
+        xnew[ i ] = ( f [ i ] - s ) / A [ i ][ i ]
+    return xnew
+```
+
 ## <a name="hw3"></a> Homework 3 - Interpolations
 In the mathematical field of numerical analysis, interpolation is a type of estimation, a method of constructing new data points within the range of a discrete set of known data points.
 
@@ -236,11 +278,13 @@ def generateSpline (x , y):
 ### <a name="scipy"></a> scipy
 
 ``` sudo apt-get install python3-scipy ```
+
 ``` pip3 install scipy ```
 
 ### <a name="plt"></a> matplotlib
 
 ``` sudo apt-get install python3-matplotlib ```
+
 ``` pip3 install matplotlib ```
 
 ### <a name="pygame"></a> pygame
@@ -252,6 +296,7 @@ def generateSpline (x , y):
 ### <a name="ffmpeg"></a> ffmpeg
 
 ``` sudo apt-get install python3-ffmpeg ```
+
 ``` pip3 install ffmpeg ```
 
 # <a name="run"></a> How to run programs
