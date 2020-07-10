@@ -4,19 +4,19 @@ from scipy.interpolate import lagrange
 
 
 def phi (i, x, y, t):
-    p = 1
+    val = 1
     for j in range(n):
         if j != i:
-            p = p * ((t - x[j]) / ( x [ i ] - x [ j ]))
+            val = val * ((t - x[j]) / ( x [ i ] - x [ j ]))
         if j == i:
-            p *= 1
-    return p
+            val *= 1
+    return val
 
-def P (x, y, t):
-    s = 0
+def Lagrange (x, y, t):
+    ans = 0
     for i in range(n):
-        s = s + y[i] * phi(i, x, y, t)
-    return s
+        ans = ans + y[i] * phi(i, x, y, t)
+    return ans
 
 
 def reading(x, y, z):
@@ -49,7 +49,7 @@ print('y:', y)
 answer = []
 test_ans = open('test2.ans', 'w')
 for i in z:
-	answer.append(P(x, y, i))
+	answer.append(Lagrange(x, y, i))
 for i in answer:
 	test_ans.write(str(i) + " ")
 test_ans.write("\n")
@@ -72,7 +72,7 @@ max_xz =  max( np.max(x), np.max(z) )
 xnew = np.linspace(min_xz , max_xz, 50 )
 ynew = []
 for el in xnew:
-	ynew.append(P(x,y,el))
+	ynew.append(Lagrange(x,y,el))
 
 plt.plot(x, y, 'o', xnew, ynew)
 plt.plot(z, answer, 'o')
