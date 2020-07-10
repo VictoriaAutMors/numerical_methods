@@ -2,18 +2,18 @@
 
 ## Content
 * [Definitions and Basics](#basics)
-* [Exact Solution of Linear Systems](#hw1)
+* [Homework 1 - Exact Solution of Linear Systems](#hw1)
   * [Gaussian elimination](#gauss)
-  * [Tridiagonal matrix algorithm](#sweep)
+  * [Tridiagonal matrix or Thomas algorithm](#sweep)
   * [Cholesky decomposition](#cholesky)
-* [Iterative methods](#hw2)
+* [Homework 2 - Iterative methods](#hw2)
   * [Seidel method](#seidel)
   * [Jacobi method](#jacobi)
-* [Homework 3 - Interpolation](#hw3)
+* [Homework 3 - Interpolations](#hw3)
   * [Linear interpolation](#linear)
   * [Polynomial or Lagrange interpolation](#lagrange)
   * [Spline interpolation](#spline)
-* [Problems of mathematical physics](#hw4)
+* [Homework 4 - Problems of mathematical physics](#hw4)
   * [Numerical methods for diffusion equations](#heat)
   * [Numerical methods for transfer equations](#transfer)
 * [Dependencies](#dependencies)
@@ -23,9 +23,104 @@
   * [pygame](#pygame)
   * [ffmpeg](#ffmpeg)
 * [How to run programs](#run)
-* [Questions ans suggestions](#questions)
 
-## <a name="hw3"></a> Homework 3 - Interpolation
+# <a name="hw1"></a> Exact Solution of Linear Systems
+
+## <a name="gauss"></a> Gaussian elimination
+### Asymptotics: ![image1](https://github.com/VictoriaAutMors/numerical_methods/blob/master/Images/Gauss1.svg)
+
+Gaussian elimination, also known as row reduction, is an algorithm in linear algebra for solving a system of linear equations. It is usually understood as a sequence of operations performed on the corresponding matrix of coefficients. This method can also be used to find the rank of a matrix, to calculate the determinant of a matrix, and to calculate the inverse of an invertible square matrix. 
+
+### code realisation in Python3: 
+```
+def forward(A, f, n):
+    for k in range(n):
+        A[k] = A[k] / A[k][k]
+        f[k] = f[k] / A[k][k] 
+        
+        for i in range(k + 1, n):
+            A[i] = A[i] - A[k] * A[i][k]
+            f[i] = f[i] - f[k] * A[i][k]
+            A[i][k] = 0
+    return A, f
+```
+```
+def backward(A, f, n):
+    myAnswer = [0] * n
+    for i in range(n - 1, -1, -1):
+        x[i] = f[i]
+        for j in range(i + 1, n):
+            x[i] = x[i] - A[i][j] * x[j]
+    return np.array(x)
+```
+### Plot of the data comparing linalg and my programm resolved time:
+
+![image10](https://github.com/VictoriaAutMors/numerical_methods/blob/master/hw1/plots/Gauss.png)
+
+vertical - time in seconds; horizontal - matrix size
+
+## <a name="sweep"></a> Tridiagonal matrix or Thomas algorithm
+### Asymptotics: ![image11](https://github.com/VictoriaAutMors/numerical_methods/blob/master/Images/Tma3.svg)
+
+In numerical linear algebra, the tridiagonal matrix algorithm, also known as the Thomas algorithm (named after Llewellyn Thomas), is a simplified form of Gaussian elimination that can be used to solve tridiagonal systems of equations. A tridiagonal system for n unknowns may be written as 
+
+![image12](https://github.com/VictoriaAutMors/numerical_methods/blob/master/Images/Tma1.svg)
+
+![image13](https://github.com/VictoriaAutMors/numerical_methods/blob/master/Images/Tma2.svg)
+
+Thomas' algorithm is not stable in general, but is so in several special cases, such as when the matrix is diagonally dominant.
+
+### code realisation in Python3: 
+```
+def sweep ( a, b, c, f, n):
+    alpha = (n + 1) * [0]
+    beta = (n + 1) * [0]
+    x = np.random.rand(n)
+    a[0] = 0
+    c[n -  1] = 0
+    alpha[0] = 0
+    beta[0] = 0
+    for i in range(0, n):  
+        d = float(a[i] * alpha[i] + b[i])
+        alpha [i + 1] = float(-c[i] / d)
+        
+        beta [i + 1] = float((f[i] - (a[i] * beta[i])) / (d))
+    x[n - 1] = float(beta[n])
+    for i in range(n - 2, -1, -1):
+        x[i] = float(alpha[i + 1] * x[i + 1] + beta[i + 1])
+    return x
+```
+### Plot of the data comparing linalg and my programm resolved time:
+
+![image14](https://github.com/VictoriaAutMors/numerical_methods/blob/master/hw1/plots/sweep.png)
+
+## <a name="cholesky"></a> Cholesky decomposition
+
+### Asymptotics: ![image15](https://github.com/VictoriaAutMors/numerical_methods/blob/master/Images/Gauss1.svg)
+
+The Cholesky decomposition of a Hermitian positive-definite matrix A is a decomposition of the form 
+A = LL where L is a lower triangular matrix with real and positive diagonal entires, and L denotes the conjugate transpose of L. Every Hermitian positive-definite matrix (and thus also every real-valued symmetric positive-definite matrix) has a unique Cholesky decomposition.
+
+### code realisation in Python3:
+```
+def Cholesky(A):
+    n = len(A)
+    L = [[0.0] * n for i in range(n)]
+    for i in range(n):
+        for k in range(i + 1):
+            tmp_sum = sum(L[i][j] * L[k][j] for j in range(k))
+            if (i == k): 
+                L[i][k] = math.sqrt(abs(A[i][i] - tmp_sum))
+            else:
+                L[i][k] = (1.0 / L[k][k] * (A[i][k] - tmp_sum))
+    return L
+```
+
+### Plot of the data comparing linalg and my programm resolved time:
+
+![image16](https://github.com/VictoriaAutMors/numerical_methods/blob/master/hw1/plots/Cholesky.png)
+
+## <a name="hw3"></a> Homework 3 - Interpolations
 In the mathematical field of numerical analysis, interpolation is a type of estimation, a method of constructing new data points within the range of a discrete set of known data points.
 
 ## <a name="linear"></a> Linear interpolation
@@ -130,3 +225,37 @@ def generateSpline (x , y):
 ### Plot of the data with spline interpolation applied:
 
 ![image9](https://github.com/VictoriaAutMors/numerical_methods/blob/master/Images/2Si.png)
+
+# <a name="dependencies"></a> Dependencies
+### <a name="numpy"></a> numpy
+
+``` sudo apt-get install python3-numpy ```
+
+``` pip3 install numpy ```
+
+### <a name="scipy"></a> scipy
+
+``` sudo apt-get install python3-scipy ```
+``` pip3 install scipy ```
+
+### <a name="plt"></a> matplotlib
+
+``` sudo apt-get install python3-matplotlib ```
+``` pip3 install matplotlib ```
+
+### <a name="pygame"></a> pygame
+
+``` sudo apt-get install python3-pygame ```
+
+``` pip3 install pygame ```
+
+### <a name="ffmpeg"></a> ffmpeg
+
+``` sudo apt-get install python3-ffmpeg ```
+``` pip3 install ffmpeg ```
+
+# <a name="run"></a> How to run programs
+
+``` python3 programName.py```
+
+**Example:**   ``` python3 Lagrange_interpolate.py ```
