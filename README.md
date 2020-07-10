@@ -268,6 +268,23 @@ def generateSpline (x , y):
 
 ![image9](https://github.com/VictoriaAutMors/numerical_methods/blob/master/Images/2Si.png)
 
+# <a name="hw4"></a> Problems of mathematical physics
+## <a name="heat"></a> Numerical methods for diffusion equation
+
+The diffusion equation is a partial differential equation that describes how the distribution of some quantity (such as heat) evolves over time in a solid medium, as it spontaneously flows from places where it is higher towards places where it is lower. It is a special case of the diffusion equation.
+
+### Plot of the data with Numerical methods for diffusion equation applied:
+
+![image19](https://github.com/VictoriaAutMors/numerical_methods/blob/master/hw4/plots/heat_equation.png)
+
+## <a name="equation"></a> Numerical methods for transfer equation
+
+Instead of the diffusion equation, the process of the propagation of particles is also described by more accurate equations: transfer equations.
+
+### Plot of the data with Numerical methods for transfer equation applied:
+
+![image20](https://github.com/VictoriaAutMors/numerical_methods/blob/master/hw4/plots/transport_equation.png)
+
 # <a name="dependencies"></a> Dependencies
 ### <a name="numpy"></a> numpy
 
@@ -279,11 +296,13 @@ def generateSpline (x , y):
 
 ``` sudo apt-get install python3-scipy ```
 
+
 ``` pip3 install scipy ```
 
 ### <a name="plt"></a> matplotlib
 
 ``` sudo apt-get install python3-matplotlib ```
+
 
 ``` pip3 install matplotlib ```
 
