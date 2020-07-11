@@ -4,7 +4,7 @@ from scipy import interpolate
 import scipy
 import matplotlib.pyplot as plt
 
-def interpolate(t, m, n, x, A, B, C, D, handle):
+def interpolate(t, m, n, x, A, B, C, D):
 	f = np.zeros(m)
 	for j in range(m):
 		for i in range(0, n - 1):
@@ -95,7 +95,7 @@ print("B:", B)
 print("C:", C)
 print("D:", D)  
 
-function = interpolate(z, m,n,  x, A, B, C, D, handle)
+function = interpolate(z, m,n,  x, A, B, C, D)
 print("My function:", function)
 print("Linalg function:", scipy.interpolate.InterpolatedUnivariateSpline(x, y)(z))
 
