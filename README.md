@@ -275,6 +275,8 @@ The diffusion equation is a partial differential equation that describes how the
 
 ### Plot of the data with Numerical methods for diffusion equation applied:
 
+![image21](https://github.com/VictoriaAutMors/numerical_methods/blob/master/hw4/plots/Figure_0.png)
+
 ![image19](https://github.com/VictoriaAutMors/numerical_methods/blob/master/hw4/plots/heat_equation.png)
 
 ## <a name="equation"></a> Numerical methods for transfer equation
@@ -282,6 +284,8 @@ The diffusion equation is a partial differential equation that describes how the
 Instead of the diffusion equation, the process of the propagation of particles is also described by more accurate equations: transfer equations.
 
 ### Plot of the data with Numerical methods for transfer equation applied:
+
+![image22](https://github.com/VictoriaAutMors/numerical_methods/blob/master/hw4/plots/Figure_1.png)
 
 ![image20](https://github.com/VictoriaAutMors/numerical_methods/blob/master/hw4/plots/transport_equation.png)
 
